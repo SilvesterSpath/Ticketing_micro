@@ -14,12 +14,22 @@ export const errorhandler = (err: Error, req: Request, res: Response, next: Next
   }
 
   if( err instanceof DatabaseConnectionError){
-    console.log('this is a database connection error')
+    const formattedError = [
+       {
+        message: err.reason,        
+       }
+      ]
+    
+    return res.status(500).send({errors: formattedError})    
   }
   
 
   res.status(400).send({
-    message: err.message
+    errors: [
+      {
+        message: 'Something went wrong' // instead of err.message
+      }
+    ]    
   })
 }
 

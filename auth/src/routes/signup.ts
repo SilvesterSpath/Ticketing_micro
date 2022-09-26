@@ -20,17 +20,11 @@ router.post('/api/users/signup', [
   const { email, password } = req.body
 
   console.log('Creating a user..')
+  /* throw new Error('Error connecting to database') */
   throw new DatabaseConnectionError()
  
   // new User({email, password})
   const user = {email, password}
-
-  if(!user || user === undefined){
-    throw new Error('Error connecting to database')
-  } else{
-    res.status(201).send(user)
-  }
-
   
 
 })
