@@ -12,7 +12,10 @@ router.post('/api/users/signup', [
 
   if(!errors.isEmpty()){
     /* return res.status(400).send(errors.array()) */
-    throw new Error('Invalid email or password')
+    // This is JavaScript land, not TypeScript
+    const error = new Error('Invalid email or password')
+    
+    throw error;
   }
 
   const { email, password } = req.body
