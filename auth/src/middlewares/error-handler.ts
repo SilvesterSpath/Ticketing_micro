@@ -4,25 +4,12 @@ import { DatabaseConnectionError } from "../errors/database-connection-error";
 
 export const errorhandler = (err: Error, req: Request, res: Response, next: NextFunction)=>{
   if(err instanceof RequestValidationError){
-    const formattedError = err.errors.map(item =>{
-      return {
-        message: item.msg,
-        field: item.param
-       }
-    })
-    return res.status(400).send({errors: formattedError})        
+    return res.status(err.statusCode).send({errors: err.serializeErrors()})        
   }
 
-  if( err instanceof DatabaseConnectionError){
-    const formattedError = [
-       {
-        message: err.reason,        
-       }
-      ]
-    
-    return res.status(500).send({errors: formattedError})    
-  }
-  
+  if( err instanceof DatabaseConnectionError){    
+    return res.status(err.statusCode).send({errors: err.serializeErrors()})    
+  } 
 
   res.status(400).send({
     errors: [
