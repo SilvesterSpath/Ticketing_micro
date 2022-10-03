@@ -1,5 +1,5 @@
 import express, {Request, Response} from 'express'
-import bcrypt from 'bcryptjs'
+/* import bcrypt from 'bcryptjs' */
 import { body, validationResult } from 'express-validator'
 import { User } from '../models/user'
 import { RequestValidationError } from '../errors/request-validation-error'
@@ -30,12 +30,12 @@ router.post('/api/users/signup', [
   }
 
   // Hash password 
-  const salt = await bcrypt.genSalt(10)
-  const hashedPassword = await bcrypt.hash(password, salt)
+/*   const salt = await bcrypt.genSalt(10)
+  const hashedPassword = await bcrypt.hash(password, salt) */
 
   const user = await User.build({    
     email,
-    password: hashedPassword
+    password
   })
 
   await user.save()

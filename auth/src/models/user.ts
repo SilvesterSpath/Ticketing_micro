@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { Password } from '../services/password'
 
 // Interface that describes the properties
 // that ar required to create a new User
@@ -33,6 +34,15 @@ const userSchema = new mongoose.Schema({
   }
 })
 
+// We add another method for password hashing (here 'this' is the user document)
+userSchema.pre('save', async function(done) {
+  if(this.isModified('password')){
+    const hashed = await Password.toHash(this.get('password'))
+    this.set('password', hashed)    
+  }  
+  done()
+})
+
 // This is how a custom function built into a model now we can use 'User.build'
 userSchema.statics.build = (attrs: UserAttrs) => {
   return new User(attrs)
@@ -40,10 +50,12 @@ userSchema.statics.build = (attrs: UserAttrs) => {
 
 const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
 
-User.build({
+
+// build a user with the help of the built in function
+/* User.build({
   email: 'test@test.com',
   password:'12345'  
-})
+}) */
 
 // build user with the help of typescript through the interface
 /* const buildUser = (attrs: UserAttrs) => {
