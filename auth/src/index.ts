@@ -12,12 +12,12 @@ import { errorhandler } from './middlewares/error-handler'
 import { NotFoundError } from './errors/not-found-error'
 
 const app = express()
-app.settings('trust proxy', true) // proxied through ingress-enginX, so we need to tell express to trust this connectino nonentheless
+app.set('trust proxy', true) // proxied through ingress-enginX, so we need to tell express to trust this connectino nonentheless
 app.use(json())
 app.use(
   cookieSession({
     signed: false,
-    secure: true // means cookies will only be used if a user is visiting our application over an HTTP connection
+    secure: true // means cookies will only be used if a user is visiting our application over an HTTPS connection
   })
 )
 
