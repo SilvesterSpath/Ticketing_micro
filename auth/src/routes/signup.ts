@@ -40,11 +40,11 @@ router.post('/api/users/signup', [
 
   await user.save()
 
-  // Generate JWT
+  // Generate JWT 
   const userJWT = jwt.sign({
     id: user.id,
     email: user.email
-  }, 'asdf')
+  }, process.env.JWT_KEY!)
 
   // Store it on session object (the cookie-session library is going to serialize it and send it back to the users browser)
   req.session = {
