@@ -31,4 +31,5 @@ app.all('*', async (req, res, next)=>{
 
 app.use(errorhandler)
 
-export { app };
+// named export 
+export { app }; 
