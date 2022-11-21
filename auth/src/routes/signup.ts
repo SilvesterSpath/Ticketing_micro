@@ -44,7 +44,7 @@ router.post('/api/users/signup', [
   const userJWT = jwt.sign({
     id: user.id,
     email: user.email
-  }, process.env.JWT_KEY!)
+  }, process.env.JWT_KEY!) // this only will be available if we running a pod
 
   // Store it on session object (the cookie-session library is going to serialize it and send it back to the users browser)
   req.session = {
