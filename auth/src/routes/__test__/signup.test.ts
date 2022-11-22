@@ -63,3 +63,17 @@ await request(app)
   .expect(400)
 })
 
+it('sets a cookie after succesful signup', async ()=>{
+  // this is the Response object in the signup.ts file
+  const response = await request(app)
+  .post('/api/users/signup')
+  .send({
+    email: 'tes@test.com',
+    password: 'password'
+  })
+  .expect(201)
+
+  expect(response.get('Set-Cookie')).toBeDefined()
+})
+
+
