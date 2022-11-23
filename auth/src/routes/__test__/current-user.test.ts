@@ -1,8 +1,10 @@
 import request from 'supertest';
 import { app } from '../../app'
 
-it('resonds with details about the current user', async()=>{
-  const authResponse = await request(app)
+it('responds with details about the current user', async()=>{
+  const cookie = await signin()
+
+/*   const authResponse = await request(app)
     .post('/api/users/signup')
     .send({
       email: 'test@test.com',
@@ -10,7 +12,7 @@ it('resonds with details about the current user', async()=>{
     })
     .expect(201)
 
-    const cookie = authResponse.get('Set-Cookie')
+    const cookie = authResponse.get('Set-Cookie') */
 
     const response = await request(app)
       .get('/api/users/currentuser')
