@@ -10,8 +10,8 @@ export default ({ req }) => {
     });
   } else {
     // We are on the browser
-    return axios.create({
-      baseURL: '/',
-    });
+    const isAuthServer = window.location.hostname === 'auth.ticketing.dev';
+    const baseURL = isAuthServer ? 'https://auth.ticketing.dev' : '/';
+    return axios.create({ baseURL });
   }
 };
